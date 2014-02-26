@@ -5,7 +5,7 @@
 
 using Justin::Vertex;
 
-CQuad::CQuad(const char * a_TexFilepath, int a_iWidth, int a_iHeight, int a_iTexWidth, int a_iTexHeight, int a_iFrameWidth, int a_iFrameHeight)
+Quad::Quad(const char * a_TexFilepath, int a_iWidth, int a_iHeight, int a_iTexWidth, int a_iTexHeight, int a_iFrameWidth, int a_iFrameHeight)
 	: m_iQuadWidth(a_iWidth), m_iQuadHeight(a_iHeight),
 	  m_iTextureWidth(a_iTexWidth), m_iTextureHeight(a_iTexHeight),
 	  m_v2FrameDimensions(glm::vec2((float)a_iFrameWidth, (float)a_iFrameHeight))
@@ -13,7 +13,7 @@ CQuad::CQuad(const char * a_TexFilepath, int a_iWidth, int a_iHeight, int a_iTex
 
 	/* Vector & Matrices Initialziation  */
 	m_v2FrameDimensions = glm::vec2( (float)a_iFrameWidth, (float)a_iFrameHeight);
-	m_v2UVUnit = glm::vec2( 1.0f / ( m_iTextureWidth / m_v2FrameDimensions.x ) , 1.0f / ( m_iTextureHeight / m_v2FrameDimensions.y));
+	m_v2FrameDimensionsNorm = glm::vec2( 1.0f / ( m_iTextureWidth / m_v2FrameDimensions.x ) , 1.0f / ( m_iTextureHeight / m_v2FrameDimensions.y));
 	m_v2UVOffset = glm::vec2(.083f * 7 , 0.0f); // Should be the idle sprite in the teleport animation row
 	m_Model = glm::mat4(1.0f);
 
@@ -39,9 +39,9 @@ CQuad::CQuad(const char * a_TexFilepath, int a_iWidth, int a_iHeight, int a_iTex
 	m_aoVertices[3].Color = glm::vec4(1.0f, 1.0f, 1.0f, 1.0f);
 
 	m_aoVertices[0].UV = glm::vec2 (0.0f  , 0.0);
-	m_aoVertices[1].UV = glm::vec2 (0.0f  , m_v2UVUnit.y );
-	m_aoVertices[2].UV = glm::vec2 (m_v2UVUnit.x , 0.0f);
-	m_aoVertices[3].UV = glm::vec2 (m_v2UVUnit.x , m_v2UVUnit.y);
+	m_aoVertices[1].UV = glm::vec2 (0.0f  , m_v2FrameDimensionsNorm.y );
+	m_aoVertices[2].UV = glm::vec2 (m_v2FrameDimensionsNorm.x , 0.0f);
+	m_aoVertices[3].UV = glm::vec2 (m_v2FrameDimensionsNorm.x , m_v2FrameDimensionsNorm.y);
 
 	glBindBuffer(GL_ARRAY_BUFFER, m_glVBO);
 	glBufferData(GL_ARRAY_BUFFER, 4 * sizeof(Vertex), m_aoVertices , GL_STATIC_DRAW);
@@ -70,15 +70,20 @@ CQuad::CQuad(const char * a_TexFilepath, int a_iWidth, int a_iHeight, int a_iTex
 
 }
 
-CQuad::~CQuad() {
+Quad::~Quad() {
 }
 
-void CQuad::SetUVOffset(float u, float v)
+void Quad::SetUVOffset(float u, float v)
 {
 	m_v2UVOffset = glm::vec2(u, v);
 }
 
-void CQuad::Update()
+void Quad::SetUVOffset(glm::vec2 uv)
+{
+	m_v2UVOffset = uv;
+}
+
+void Quad::Update()
 {
 	glUseProgram(m_glShaderProgram);
 	glActiveTexture(GL_TEXTURE0);

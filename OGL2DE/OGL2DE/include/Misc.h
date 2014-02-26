@@ -34,11 +34,13 @@ namespace Justin
 	void glfw_window_size_callback(GLFWwindow* window, int width, int height);
 	void glfw_error_callback(int error, const char * description);
 	void glfw_update_fps_counter(GLFWwindow* window);
+
 };
 
 namespace Sam
 {
 	/* Globals */
+	extern float fDeltaTime;
 	extern int iWindowWidth;
 	extern int iWindowHeight;
 	extern GLFWwindow * MyWindow;
@@ -50,6 +52,8 @@ namespace Sam
 	float Random();
 	float RandRange( float fMin, float fMax );
 	glm::vec3 RandUnitVec();
+	float GetDeltaTime();
+	void ResetDeltaTime();
 
 };
 

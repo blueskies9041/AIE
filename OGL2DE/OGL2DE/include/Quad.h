@@ -14,22 +14,23 @@ using namespace Sam;
 		Direct X) ...
 */
 
-class CQuad 
+class Quad 
 {
 	public:
 
-		CQuad(const char * a_TexFilepath, int a_iWidth, int a_iHeight, int a_iTextureWidth, int a_iTextureHeight, int a_iFrameWidth, int a_FrameHeight);
-		~CQuad();
+		Quad(const char * a_TexFilepath, int a_iWidth, int a_iHeight, int a_iTextureWidth, int a_iTextureHeight, int a_iFrameWidth, int a_FrameHeight);
+		~Quad();
 
 		void SetUVOffset(float u, float v); 
+		void SetUVOffset(glm::vec2 uv);
 		void Update();
 
 	protected:
 
 		/* Standard members */
-		int m_iTextureWidth;
+		int m_iTextureWidth; //Actual Texture (Sprite Sheet) Dimensions in pixels
 		int m_iTextureHeight;
-		int m_iQuadWidth;
+		int m_iQuadWidth; //Primitive Dimensions in pixels
 		int m_iQuadHeight;
 
 		Justin::Vertex m_aoVertices[4]; // Array of Vertices, see "Vertex" Structure in Misc.h
@@ -37,7 +38,7 @@ class CQuad
 		glm::mat4 m_View;  //Camera Matrix, not currently in use
 		glm::vec2 m_v2UVOffset; //Texture coordinate offset for Sprite Sheet use later
 		glm::vec2 m_v2FrameDimensions; //Size of each frame in pixel dimensions (75 x 75 etc)
-		glm::vec2 m_v2UVUnit; // (Size of each "frame" in the texture expressed in normalized device (UV) coordinates
+		glm::vec2 m_v2FrameDimensionsNorm; // Dimensions of each "frame" in the texture expressed in normalized device coordinates
 		
 		/* OpenGL members */
 		GLuint m_glShaderProgram;

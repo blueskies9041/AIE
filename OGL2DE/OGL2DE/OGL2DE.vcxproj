@@ -73,6 +73,7 @@
     <ClInclude Include="include\GLLOG.h" />
     <ClInclude Include="include\JustinTxtReader.h" />
     <ClInclude Include="include\Misc.h" />
+    <ClInclude Include="include\Player.h" />
     <ClInclude Include="include\Quad.h" />
     <ClInclude Include="include\Shader.h" />
     <ClInclude Include="include\Sprite.h" />
@@ -81,6 +82,7 @@
   <ItemGroup>
     <ClCompile Include="source\main.cpp" />
     <ClCompile Include="source\Misc.cpp" />
+    <ClCompile Include="source\Player.cpp" />
     <ClCompile Include="source\Quad.cpp" />
     <ClCompile Include="source\Shader.cpp" />
     <ClCompile Include="source\Sprite.cpp" />

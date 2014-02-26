@@ -40,6 +40,9 @@ namespace Justin
 		}
 		frame_count++;
 	}
+
+
+
 };
 
 namespace Sam
@@ -47,7 +50,6 @@ namespace Sam
 	/* Globals */
 	int iWindowWidth = 1024;
 	int iWindowHeight = 768;
-
 	float fDeltaTime = 0.0f;
 	glm::mat4 Projection = glm::ortho( 0.0f,			    // Left
 									  (float)iWindowWidth,  //Right
@@ -58,11 +60,8 @@ namespace Sam
 
 	//Projection matrix creates normal computer coordinate system.
 	//Origin (0,0) at top left and (Window Width, Window Height) at bottom right
-	
-	/* Functions */
-	glm::mat4 m4Projection = glm::ortho(0.0f,1024.0f,768.0f,0.0f,0.0f,100.0f);
-	glm::mat4 m4View = glm::mat4(1.0f);
 
+	/* Functions */
 	GLFWwindow* MyWindow = Sam::NewWindow();
 	GLFWwindow* NewWindow()
 	{
@@ -135,6 +134,16 @@ namespace Sam
 
 		return glm::normalize( glm::vec3(x,y,z) );
 	}
+	float GetDeltaTime()
+	{
+		return fDeltaTime;
+	}
+	void ResetDeltaTime()
+	{
+		fDeltaTime = glfwGetTime();
+		glfwSetTime(0);
+	}
+
 
 };
 

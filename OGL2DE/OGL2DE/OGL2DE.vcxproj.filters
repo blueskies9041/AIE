@@ -45,6 +45,9 @@
     <ClInclude Include="include\Texture.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="include\Player.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="source\main.cpp">
@@ -65,6 +68,9 @@
     <ClCompile Include="source\Texture.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="source\Player.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="resources\graphics\particle.bmp">
@@ -76,14 +82,14 @@
     <None Include="resources\graphics\test2.bmp">
       <Filter>Resource Files\Graphics</Filter>
     </None>
-    <None Include="resources\graphics\ZeroSpriteSheet.png">
-      <Filter>Resource Files\Graphics</Filter>
-    </None>
     <None Include="resources\shaders\basic.frag">
       <Filter>Resource Files\Shaders</Filter>
     </None>
     <None Include="resources\shaders\basic.vert">
       <Filter>Resource Files\Shaders</Filter>
+    </None>
+    <None Include="resources\graphics\ZeroSpriteSheet.png">
+      <Filter>Resource Files\Graphics</Filter>
     </None>
   </ItemGroup>
 </Project>

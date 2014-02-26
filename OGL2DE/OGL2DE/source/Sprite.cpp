@@ -1,7 +1,9 @@
 #include "Sprite.h"
+#include <iostream>
 
-CSprite::CSprite( const char* a_TexFilepath, int a_iWidth, int a_iHeight, int a_iTexWidth, int a_iTexHeight,int a_iFrameWidth, int a_iFrameHeight, GLFWwindow * a_opWindow)
-	: CQuad(a_TexFilepath, a_iWidth, a_iHeight, a_iTexWidth, a_iTexHeight, a_iFrameWidth, a_iFrameHeight)
+using std::cout;
+Sprite::Sprite( const char* a_TexFilepath, int a_iWidth, int a_iHeight, int a_iTexWidth, int a_iTexHeight,int a_iFrameWidth, int a_iFrameHeight, GLFWwindow * a_opWindow)
+	: Quad(a_TexFilepath, a_iWidth, a_iHeight, a_iTexWidth, a_iTexHeight, a_iFrameWidth, a_iFrameHeight)
 {
 	m_oGameWindow = a_opWindow; // Pass in the App Window for glfw stuff
 
@@ -17,10 +19,12 @@ CSprite::CSprite( const char* a_TexFilepath, int a_iWidth, int a_iHeight, int a_
 	m_Model[3][2] = m_v3Position.z;	
 }
 
-CSprite::~CSprite(){
+Sprite::~Sprite()
+{
 }
 
-void CSprite::Draw() {
+void Sprite::Draw()
+{
 
 	//Input();
 	m_Model[0][0] = m_v2Scale.x;
@@ -33,40 +37,25 @@ void CSprite::Draw() {
 
 }
 
+void Sprite::Play(Animation &a_roAnimation)
+{
+	static double dFrameLimit = 1.0 / 15.0;
 
+	a_roAnimation.m_fElapsedTime += fDeltaTime;
 
-void CSprite::Input() {
+	if(a_roAnimation.m_fElapsedTime >= dFrameLimit)
+	{
+		a_roAnimation.m_fElapsedTime = 0.0f;
+		SetUVOffset(a_roAnimation.m_FrameData[a_roAnimation.m_iCurrentFrame]);
+		a_roAnimation.m_iCurrentFrame++;
 
-	static double lastTime = glfwGetTime();
-	double currentTime = glfwGetTime();
-	float deltaTime = float(currentTime - lastTime);
-	//m_v3Speed = glm::vec3(0.0f, 0.0f, 0.0f);
-
-	if (GLFW_PRESS == glfwGetKey(m_oGameWindow, GLFW_KEY_W))
-		m_v3Speed.y -= 1.0f;
-		
-    if (GLFW_PRESS == glfwGetKey(m_oGameWindow, GLFW_KEY_A))
-        m_v3Speed.x -= 1.0f;
-
-    if (GLFW_PRESS == glfwGetKey(m_oGameWindow, GLFW_KEY_S))
-		m_v3Speed.y += 1.0f;
-
-    if (GLFW_PRESS == glfwGetKey(m_oGameWindow, GLFW_KEY_D))
-        m_v3Speed.x += 1.0f;
-
-	m_v3Position += (m_v3Speed * deltaTime );
+		if(a_roAnimation.m_iCurrentFrame >= a_roAnimation.m_iNumFrames)
+			a_roAnimation.m_iCurrentFrame = 0;
+	}
 }
 
-bool CSprite::CheckBoxCollision(CSprite &a_roSprite) {
-
-	glm::vec3 v3Source = m_v3Position;
-	glm::vec3 v3Target = a_roSprite.m_v3Position;
-
-	return (abs(v3Source.x - v3Target.x) * 2) <  (m_v2Scale.x + a_roSprite.m_v2Scale.x)
-		&& (abs(v3Source.y - v3Target.y) * 2) <  (m_v2Scale.y + a_roSprite.m_v2Scale.y);
-}
-
-void CSprite::Cleanup() {
+void Sprite::Cleanup()
+{
 	glDeleteTextures(1, &m_glTexture);
 	glDeleteShader(m_glShaderProgram);
 	glDeleteBuffers(1, &m_glVBO);
