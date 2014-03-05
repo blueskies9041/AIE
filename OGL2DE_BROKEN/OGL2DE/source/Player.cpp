@@ -1,0 +1,73 @@
+#include "Player.h"
+
+Player::Player() : Sprite( "resources/graphics/ZeroSpriteSheet.png", 150, 150, 900, 1200, 75, 75, g_MyWindow)
+{
+	Animation Jump;
+	Jump.m_fElapsedTime = 0.0f;
+	Jump.m_iNumFrames = 10;
+	Jump.m_iCurrentFrame = 0;
+	for(int i = 0; i < Jump.m_iNumFrames; ++i)
+		Jump.m_FrameData.push_back(glm::vec2( m_v2FrameDimensionsNorm.x * i, m_v2FrameDimensionsNorm.y));
+
+	m_Animations.push_back(Jump);
+
+	Animation Run;
+	Run.m_fElapsedTime = 0.0f;
+	Run.m_iNumFrames = 8;
+	Run.m_iCurrentFrame = 0;
+	for(int i = 0; i < Run.m_iNumFrames; ++i)
+		Run.m_FrameData.push_back(glm::vec2( (m_v2FrameDimensionsNorm.x * 3) + (m_v2FrameDimensionsNorm.x * i) , m_v2FrameDimensionsNorm.y * 2));
+
+	m_Animations.push_back(Run);
+
+
+
+	//Animation Warp;
+	//m_Animations.push_back(Warp);
+
+}
+
+Player::~Player()
+{
+
+}
+
+void Player::Draw()
+{
+	Sprite::Draw();
+}
+
+
+
+void Player::Input() 
+{
+	m_v3Speed = glm::vec3(0.0f, 0.0f, 0.0f);
+
+	this->Play(m_Animations[0]);
+
+	if (GLFW_PRESS == glfwGetKey(m_oGameWindow, GLFW_KEY_W))
+		m_v3Speed.y -= 2.0f * g_fDeltaTime * 60.0f ;
+		
+    if (GLFW_PRESS == glfwGetKey(m_oGameWindow, GLFW_KEY_A))
+        m_v3Speed.x -= 2.0f * g_fDeltaTime * 60.0f;
+
+    if (GLFW_PRESS == glfwGetKey(m_oGameWindow, GLFW_KEY_S))
+		m_v3Speed.y += 2.0f * g_fDeltaTime * 60.0f;
+
+    if (GLFW_PRESS == glfwGetKey(m_oGameWindow, GLFW_KEY_D))
+        m_v3Speed.x += 2.0f * g_fDeltaTime * 60.0f;
+
+	m_v3Position += m_v3Speed;
+}
+
+bool Player::CheckBoxCollision(Sprite &a_roSprite) 
+{
+
+	//glm::vec3 v3Source = m_v3Position;
+	//glm::vec3 v3Target = a_roSprite.m_v3Position;
+
+	//return (abs(v3Source.x - v3Target.x) * 2) <  (m_v2Scale.x + a_roSprite.m_v2Scale.x)
+	//	&& (abs(v3Source.y - v3Target.y) * 2) <  (m_v2Scale.y + a_roSprite.m_v2Scale.y);
+
+	return 1;
+}
