@@ -2,35 +2,37 @@
 
 Player::Player() : Sprite( "resources/graphics/ZeroSpriteSheet.png", 150, 150, 75, 75, g_MyWindow)
 {
-	Animation Jump;
-	Jump.m_fElapsedTime = 0.0f;
-	Jump.m_iNumFrames = 10;
-	Jump.m_iCurrentFrame = 0;
-	for(int i = 0; i < Jump.m_iNumFrames; ++i)
-		Jump.m_FrameData.push_back(glm::vec2( m_v2FrameDimensionsNorm.x * i, m_v2FrameDimensionsNorm.y));
+	Animation * Jump = new Animation;
+	Jump->m_fElapsedTime = 0.0f;
+	Jump->m_iNumFrames = 10;
+	Jump->m_iCurrentFrame = 0;
+	for(int i = 0; i < Jump->m_iNumFrames; ++i)
+		Jump->m_FrameData.push_back(glm::vec2( m_v2FrameDimensionsNorm.x * i, m_v2FrameDimensionsNorm.y));
 
-	m_Animations.push_back(Jump);
+	m_Animations.push_back(*Jump);
 
-	Animation Run;
-	Run.m_fElapsedTime = 0.0f;
-	Run.m_iNumFrames = 8;
-	Run.m_iCurrentFrame = 0;
-	for(int i = 0; i < Run.m_iNumFrames; ++i)
-		Run.m_FrameData.push_back(glm::vec2( (m_v2FrameDimensionsNorm.x * 3) + (m_v2FrameDimensionsNorm.x * i) , m_v2FrameDimensionsNorm.y * 2));
+	Animation * Run = new Animation;
+	Run->m_fElapsedTime = 0.0f;
+	Run->m_iNumFrames = 8;
+	Run->m_iCurrentFrame = 0;
+	for(int i = 0; i < Run->m_iNumFrames; ++i)
+		Run->m_FrameData.push_back(glm::vec2( (m_v2FrameDimensionsNorm.x * 3) + (m_v2FrameDimensionsNorm.x * i) , m_v2FrameDimensionsNorm.y * 2));
 
-	m_Animations.push_back(Run);
+	m_Animations.push_back(*Run);
 
-	Animation Idle;
-	Idle.m_fElapsedTime = 0.0f;
-	Idle.m_iNumFrames = 1;
-	Idle.m_iCurrentFrame = 0;
-	for(int i = 0; i < Idle.m_iNumFrames; ++i)
-		Idle.m_FrameData.push_back(glm::vec2( (m_v2FrameDimensionsNorm.x * 8) + (m_v2FrameDimensionsNorm.x * i), 0.0f));
+	Animation * Idle = new Animation;
+	Idle->m_fElapsedTime = 0.0f;
+	Idle->m_iNumFrames = 1;
+	Idle->m_iCurrentFrame = 0;
+	for(int i = 0; i < Idle->m_iNumFrames; ++i)
+		Idle->m_FrameData.push_back(glm::vec2( (m_v2FrameDimensionsNorm.x * 8) + (m_v2FrameDimensionsNorm.x * i), 0.0f));
 
-	m_Animations.push_back(Idle);
+	m_Animations.push_back(*Idle);
 
 
-
+	delete Jump;
+	delete Run;
+	delete Idle;
 	//Animation Warp;
 	//m_Animations.push_back(Warp);
 
@@ -73,7 +75,7 @@ void Player::Input()
         m_v3Speed.x += 2.0f * g_fDeltaTime * 60.0f;
 	}
 	else if( m_v3Speed.x == 0.0f && m_v3Speed.y == 0.0f)
-		this->Play(m_Animations[2]);
+		this->Play(m_Animations[0]);
 
 	m_v3Position += m_v3Speed;
 }
