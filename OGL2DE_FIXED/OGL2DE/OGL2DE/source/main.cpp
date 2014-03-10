@@ -32,6 +32,7 @@ void main()
 
 	Sprite SpriteA("resources/graphics/ZeroSpriteSheet.png", 200, 200, 75, 75, g_MyWindow);
 	Player Player1;
+
 	
 	//SpriteA.m_v3Position.x += 150.0f;
 
@@ -51,7 +52,8 @@ void main()
 		/* Draw Calls */
 		//T.Print("Text.", 10, 100, 25);
 		//Z.Print("Text. NOW WITH BLUE H AND BLACKNESS! ", 10, 165, 25);
-		//SpriteA.Draw();
+		
+		SpriteA.Draw();
 		Player1.Input();
 		Player1.Draw();
 

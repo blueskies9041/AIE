@@ -21,6 +21,7 @@ Sprite::Sprite( const char* a_TexFilepath, int a_iWidth, int a_iHeight, int a_iF
 
 Sprite::~Sprite()
 {
+
 }
 
 void Sprite::Draw()
@@ -52,12 +53,3 @@ void Sprite::Play(Animation &a_roAnimation)
 			a_roAnimation.m_iCurrentFrame = 0;
 	}
 }
-
-void Sprite::Cleanup()
-{
-	glDeleteTextures(1, &m_uiTexture);
-	glDeleteBuffers(1, &m_VBO);
-	glDeleteBuffers(1, &m_EBO);
-	glDeleteVertexArrays(1, &m_VAO);
-}
-

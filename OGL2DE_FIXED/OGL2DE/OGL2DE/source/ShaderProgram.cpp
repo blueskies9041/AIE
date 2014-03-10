@@ -1,14 +1,15 @@
 #include "ShaderProgram.h"
+#include <iostream>
 
 ShaderProgram::ShaderProgram(std::vector<Shader> a_Shaders) : m_Object(0)
 {
 	if(a_Shaders.size() <= 0)
-		throw std::runtime_error("No shaders were provided to create the program");
+		std::cout << ("No shaders were provided to create the program") << endl;
 
 	//create the program object
 	m_Object = glCreateProgram();
 	if(m_Object == 0)
-		throw std::runtime_error("glCreateProgram failed");
+		std::cout << ("glCreateProgram failed\n");
 
 	//attach all the shaders
     for(unsigned i = 0; i < a_Shaders.size(); ++i)
@@ -21,22 +22,18 @@ ShaderProgram::ShaderProgram(std::vector<Shader> a_Shaders) : m_Object(0)
     for(unsigned i = 0; i < a_Shaders.size(); ++i)
         glDetachShader(m_Object, a_Shaders[i].GetObject());
 
-	//throw exception if linking failed
-    GLint status;
-    glGetProgramiv(m_Object, GL_LINK_STATUS, &status);
-    if (status == GL_FALSE) {
-        std::string msg("Program linking failure: ");
-        
-        GLint infoLogLength;
-        glGetProgramiv(m_Object, GL_INFO_LOG_LENGTH, &infoLogLength);
-        char* strInfoLog = new char[infoLogLength + 1];
-        glGetProgramInfoLog(m_Object, infoLogLength, NULL, strInfoLog);
-        msg += strInfoLog;
-        delete[] strInfoLog;
-        
-        glDeleteProgram(m_Object); m_Object = 0;
-        throw std::runtime_error(msg);
-    }
+	GLint Result;
+	int iInfoLogLength;
+	//Check program
+	glGetProgramiv(m_Object, GL_LINK_STATUS, &Result);
+	glGetProgramiv(m_Object, GL_INFO_LOG_LENGTH, &iInfoLogLength);
+	if(iInfoLogLength < 0)
+	{
+		std::vector<char> ShaderProgErrMsg(iInfoLogLength + 1);
+		glGetShaderInfoLog(m_Object, iInfoLogLength, NULL, &ShaderProgErrMsg[0]);
+		std::cout<< ("%s\n", &ShaderProgErrMsg[0]);
+	}
+
 }
 
 
@@ -68,11 +65,11 @@ void ShaderProgram::StopUsing()
 GLint ShaderProgram::GetAttribute(const GLchar* a_pAttributeName) const
 {
 	if(!a_pAttributeName)
-		throw std::runtime_error("Attribute Name argument was NULL");
+		std::cout << ("Attribute Name argument was NULL\n");
 
 	GLint attrib = glGetAttribLocation(m_Object, a_pAttributeName);
 	if(attrib == -1)
-		throw std::runtime_error(std::string("Program Attribute not found: ") + a_pAttributeName);
+		std::cout << (std::string("Program Attribute not found: ") + a_pAttributeName +"\n");
 
 	return attrib;
 }
@@ -80,17 +77,18 @@ GLint ShaderProgram::GetAttribute(const GLchar* a_pAttributeName) const
 GLint ShaderProgram::GetUniform(const GLchar * a_pUniformName) const
 {
 	if(!a_pUniformName)
-		throw std::runtime_error("Uniform Name argument was NULL");
+		std::cout << ("Uniform Name argument was NULL");
 
 	GLint uniform = glGetUniformLocation(m_Object, a_pUniformName);
 	if(uniform == -1)
-		throw std::runtime_error(std::string("Program Uniform not found: ") + a_pUniformName);
+		std::cout << (std::string("Program Uniform not found: ") + a_pUniformName + "\n");
 
 	return uniform;
 }
 
 // returns a new tdogl::Program created from the given vertex and fragment shader filenames
-ShaderProgram * LoadBasicShaders(const char* vertFilename, const char* fragFilename) {
+ShaderProgram * LoadBasicShaders(const char* vertFilename, const char* fragFilename)
+{
     std::vector<Shader> shaders;
     shaders.push_back(Shader::ShaderFromFile(vertFilename, GL_VERTEX_SHADER));
     shaders.push_back(Shader::ShaderFromFile(fragFilename, GL_FRAGMENT_SHADER));

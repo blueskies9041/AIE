@@ -15,8 +15,6 @@ private:
 	GLuint m_Object;
 	unsigned * m_pRefCount;
 
-	
-
 public:
 
 	Shader(const std::string& a_sShaderCode, GLenum a_ShaderType );

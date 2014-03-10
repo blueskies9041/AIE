@@ -93,7 +93,6 @@
     <ClCompile Include="source\Texture.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="ClassDiagram1.cd" />
     <None Include="resources\graphics\Holstein.png" />
     <None Include="resources\graphics\Holstein2.png" />
     <None Include="resources\graphics\particle.bmp" />
