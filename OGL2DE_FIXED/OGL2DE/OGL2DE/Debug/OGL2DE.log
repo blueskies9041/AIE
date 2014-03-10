@@ -1,4 +1,4 @@
-﻿Build started 3/5/2014 10:30:08 AM.
+﻿Build started 3/10/2014 2:15:35 PM.
      1>Project "C:\Users\Student\Documents\GitHub\AIE\OGL2DE_FIXED\OGL2DE\OGL2DE\OGL2DE.vcxproj" on node 2 (build target(s)).
      1>InitializeBuildStatus:
          Creating "Debug\OGL2DE.unsuccessfulbuild" because "AlwaysCreate" was specified.
@@ -14,4 +14,4 @@
 
 Build succeeded.
 
-Time Elapsed 00:00:00.07
+Time Elapsed 00:00:00.05

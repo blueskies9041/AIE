@@ -1,27 +1,27 @@
 #include "Quad.h"
 #include "Misc.h"
-#include "Shader.h"
-#include "Texture.h"
 #include "SOIL.h"
 #include <iostream>
-
 
 using Justin::Vertex;
 
 Quad::Quad(const char * a_TexFilepath, int a_iWidth, int a_iHeight, int a_iFrameWidth, int a_iFrameHeight)
 	: m_iQuadWidth(a_iWidth), m_iQuadHeight(a_iHeight), m_v2FrameDimensions(glm::vec2((float)a_iFrameWidth, (float)a_iFrameHeight))
 {
+
+	/* Shader Program */
+
+	m_ShaderProgram = LoadBasicShaders("resources/shaders/basic.vert", "resources/shaders/basic.frag");
+
 	/* Texture Loading through SOIL */
 	LoadTexture(a_TexFilepath);
+	m_TextureID = m_ShaderProgram->GetUniform("DiffuseTexture");
 
 	/* Vector & Matrices Initialziation  */
 	m_v2FrameDimensions = glm::vec2( (float)a_iFrameWidth, (float)a_iFrameHeight);
 	m_v2FrameDimensionsNorm = glm::vec2( 1.0f / ( m_iTextureWidth / m_v2FrameDimensions.x ) , 1.0f / ( m_iTextureHeight / m_v2FrameDimensions.y));
 	m_v2UVOffset = glm::vec2(.083f * 7 , 0.0f); // Should be the idle sprite in the teleport animation row
 	m_Model = glm::mat4(1.0f);
-
-	/* Shader Program */
-	m_ShaderProgram = LoadShaders("resources/shaders/basic.vert", "resources/shaders/basic.frag");
 
 	/* VAO */
 	glGenVertexArrays(1, &m_VAO);
@@ -88,13 +88,11 @@ Quad::Quad(const char * a_TexFilepath, int a_iWidth, int a_iHeight, int a_iFrame
 
 	glBindVertexArray(0);
 
-
-
-	
+	m_ShaderProgram->Use();
 
 	/* GLSL Identifier Setup */
-	m_MatrixID = glGetUniformLocation(m_ShaderProgram, "MVP");
-	m_UVOffsetID = glGetUniformLocation(m_ShaderProgram, "UVOffset");
+	m_MatrixID = m_ShaderProgram->GetUniform("MVP");
+	m_UVOffsetID = m_ShaderProgram->GetUniform("UVOffset");
 	
 
 }
@@ -134,13 +132,14 @@ void Quad::LoadTexture(const char* a_TexFilepath)
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
 
-	m_TextureID = glGetUniformLocation (m_ShaderProgram, "DiffuseTexture");
+	
 }
 
 void Quad::Draw()
 {
 	glBlendFunc (m_uiSourceBlendMode, m_uiDestinationBlendMode);
-	glUseProgram(m_ShaderProgram);
+
+	m_ShaderProgram->Use();
 
 	glActiveTexture(GL_TEXTURE0); //Choose texture unit
 	glBindTexture(GL_TEXTURE_2D, m_uiTexture); //Bind texture object

@@ -4,6 +4,9 @@
 #include <vector>
 #include <fstream>
 #include "Assert.h"
+#include <stdexcept>
+#include <cassert>
+#include <sstream>
 
 GLuint LoadShaders(const char * vertex_file_path,const char * fragment_file_path)
 {
@@ -206,4 +209,102 @@ GLuint LoadShaders(const char * vertex_file_path, const char * geometry_file_pat
 	glDeleteShader(FragmentShaderID);
 
 	return ProgramID;
+}
+
+/* */
+Shader::Shader(const std::string& a_sShaderCode, GLenum a_ShaderType )
+{
+	/* Create Shader Object */
+	m_Object = glCreateShader(a_ShaderType);
+	if(m_Object == 0)
+		throw std::runtime_error("glCreateShader failed.");
+
+	/* Set Source Code */
+    const char* pShaderCode = a_sShaderCode.c_str();
+    glShaderSource(m_Object, 1, (const GLchar**)&pShaderCode, NULL);
+
+	/* Compile */
+	glCompileShader(m_Object);
+
+	/* Throw Exception on Error */
+    GLint shaderStatus;
+    glGetShaderiv(m_Object, GL_COMPILE_STATUS, &shaderStatus);
+    if (shaderStatus == GL_FALSE) {
+        std::string msg("Compile failure in shader:\n");
+        
+        GLint infoLogLength;
+        glGetShaderiv(m_Object, GL_INFO_LOG_LENGTH, &infoLogLength);
+
+        char* strInfoLog = new char[infoLogLength + 1];
+        glGetShaderInfoLog(m_Object, infoLogLength, NULL, strInfoLog);
+
+        msg += strInfoLog;
+        delete[] strInfoLog;
+        
+        glDeleteShader(m_Object); m_Object = 0;
+        throw std::runtime_error(msg);
+    }
+    
+    m_pRefCount = new unsigned;
+    *m_pRefCount = 1;
+
+}
+Shader::Shader(const Shader& a_Other) :
+    m_Object(a_Other.m_Object),
+    m_pRefCount(a_Other.m_pRefCount)
+{
+    Retain();
+}
+Shader::~Shader()
+{
+	 if(m_pRefCount) 
+		 Release();
+}
+
+Shader Shader::ShaderFromFile(const std::string& a_sFilepath, GLenum a_ShaderType)
+{
+	/* Opening Text File */
+	std::ifstream f;
+	f.open(a_sFilepath.c_str(), std::ios::in | std::ios::binary); //Opening
+	if(!f.is_open())
+	{
+		throw std::runtime_error(std::string("Failed to open file: ") + a_sFilepath); //Debugging
+	}
+
+	/* Reading Text File */
+	std::stringstream buffer;
+	buffer << f.rdbuf();
+
+	/* Return new Shader */
+	Shader newShader(buffer.str(), a_ShaderType);
+	return newShader;
+}
+
+Shader& Shader::operator = (const Shader& a_Other)
+{
+    Release();
+    m_Object = a_Other.m_Object;
+    m_pRefCount = a_Other.m_pRefCount;
+    Retain();
+    return *this;
+}
+
+
+void Shader::Retain()
+{
+	assert(m_pRefCount);
+	*m_pRefCount += 1;
+}
+
+void Shader::Release()
+{
+	assert(m_pRefCount && *m_pRefCount > 0);
+	*m_pRefCount -= 1;
+	if(*m_pRefCount == 0)
+	{
+		glDeleteShader(m_Object);
+		m_Object = 0;
+		delete m_pRefCount;
+		m_pRefCount = NULL;
+	}
 }

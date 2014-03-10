@@ -1,0 +1,39 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="Player" Collapsed="true">
+    <Position X="0.5" Y="3.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAABAABAgAAAAAAAAAAEAAAAAAAAAAAAQAAABA=</HashCode>
+      <FileName>include\Player.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Sprite" Collapsed="true">
+    <Position X="0.5" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>IAAAAAAAAAAAEgAEAAAAAAAAAAAAAAAQiAAgAEAAACI=</HashCode>
+      <FileName>include\Sprite.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Text" Collapsed="true">
+    <Position X="2.5" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAEEQEABAAAQAAAAAAgAAAAIAAABAAEAAAACAAEkAA=</HashCode>
+      <FileName>include\Text.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Struct Name="Animation" Collapsed="true">
+    <Position X="2.5" Y="2.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AgACAAAAAAAAAAAAAAAAAAAAACgAAAABAAAAAAAAAAA=</HashCode>
+      <FileName>include\Sprite.h</FileName>
+    </TypeIdentifier>
+  </Struct>
+  <Struct Name="Justin::Vertex" Collapsed="true">
+    <Position X="2.5" Y="0.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>include\Misc.h</FileName>
+    </TypeIdentifier>
+  </Struct>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>

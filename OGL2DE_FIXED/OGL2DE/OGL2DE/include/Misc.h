@@ -54,7 +54,6 @@ namespace Sam
 	glm::vec3 RandUnitVec();
 	float GetDeltaTime();
 	void ResetDeltaTime();
-
 };
 
 #endif

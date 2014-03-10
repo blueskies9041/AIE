@@ -20,4 +20,22 @@ GLuint loadDDS(const char * imagepath);
 GLuint LoadTexture(const char* a_szTexture, unsigned int a_uiFormat 
 					 =GL_RGBA , unsigned int* a_uiWidth  = nullptr , 
 					unsigned int* a_uiHeight  = nullptr , unsigned int* a_uiBPP  = nullptr);
+
+class Texture
+{
+	public:
+
+		Texture(const char * a_pFilepath);
+		~Texture();
+
+		inline GLuint GetObject() { return m_Object; }
+		inline int GetWidth() { return m_iWidth; }
+		inline int GetHeight() { return m_iHeight; }
+
+	private:
+
+		GLuint m_Object;
+		int m_iWidth;
+		int m_iHeight;
+};
 #endif

@@ -56,7 +56,6 @@ void Sprite::Play(Animation &a_roAnimation)
 void Sprite::Cleanup()
 {
 	glDeleteTextures(1, &m_uiTexture);
-	glDeleteShader(m_ShaderProgram);
 	glDeleteBuffers(1, &m_VBO);
 	glDeleteBuffers(1, &m_EBO);
 	glDeleteVertexArrays(1, &m_VAO);
