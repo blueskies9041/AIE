@@ -72,6 +72,15 @@
     <ClInclude Include="include\Text.h">
       <Filter>Header Files\Engine Objects</Filter>
     </ClInclude>
+    <ClInclude Include="include\Timer.h">
+      <Filter>Header Files\Engine Objects</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Window.h">
+      <Filter>Header Files\Engine Objects</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Engine.h">
+      <Filter>Header Files\Engine Objects</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="source\main.cpp">
@@ -99,6 +108,15 @@
       <Filter>Source Files\OpenGL Objects</Filter>
     </ClCompile>
     <ClCompile Include="source\Sprite.cpp">
+      <Filter>Source Files\Engine Objects</Filter>
+    </ClCompile>
+    <ClCompile Include="source\Timer.cpp">
+      <Filter>Source Files\Engine Objects</Filter>
+    </ClCompile>
+    <ClCompile Include="source\Window.cpp">
+      <Filter>Source Files\Engine Objects</Filter>
+    </ClCompile>
+    <ClCompile Include="source\Engine.cpp">
       <Filter>Source Files\Engine Objects</Filter>
     </ClCompile>
   </ItemGroup>

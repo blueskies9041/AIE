@@ -5,7 +5,7 @@
 #include <algorithm>
 #include "glew.h"
 #include "glfw3.h"
-
+#include "Timer.h"
 #include <glm.hpp>
 #include <gtc/matrix_transform.hpp>
 #include <gtc/type_ptr.hpp>
@@ -37,18 +37,20 @@ namespace Justin
 
 };
 
+
+
 namespace Sam
 {
 	/* Globals */
 	extern float g_fDeltaTime;
 	extern int g_iWindowWidth;
 	extern int g_iWindowHeight;
-	extern GLFWwindow * g_MyWindow;
+	//extern GLFWwindow * g_MyWindow;
 	extern glm::mat4 g_Projection ;
 
 	/* Functions */
 	GLuint LoadTexture(const char *, int, int);
-	GLFWwindow* NewWindow();
+	//GLFWwindow* NewWindow();
 	float Random();
 	float RandRange( float fMin, float fMax );
 	glm::vec3 RandUnitVec();

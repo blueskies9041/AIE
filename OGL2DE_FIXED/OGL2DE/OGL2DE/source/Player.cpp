@@ -1,7 +1,11 @@
 #include "Player.h"
+#include "Window.h"
 
-Player::Player() : Sprite( "resources/graphics/ZeroSpriteSheet.png", 150, 150, 75, 75, g_MyWindow)
+Player::Player(GLFWwindow* a_pWindow) : Sprite( "resources/graphics/ZeroSpriteSheet.png", 150, 150, 75, 75, a_pWindow)
 {
+
+	m_oGameWindow = Window::GetInstance().GetContext();
+
 	Animation * Jump = new Animation;
 	Jump->m_fElapsedTime = 0.0f;
 	Jump->m_iNumFrames = 10;
@@ -51,12 +55,13 @@ void Player::Draw()
 void Player::Input() 
 {
 	m_v3Speed = glm::vec3(0.0f, 0.0f, 0.0f);
+	//this->Play(m_Animations[0]);
 
-	if (GLFW_PRESS == glfwGetKey(m_oGameWindow, GLFW_KEY_W))
-	{	
+	//if (GLFW_PRESS == glfwGetKey(m_oGameWindow, GLFW_KEY_W))
+	//{	
 		this->Play(m_Animations[0]);
-		m_v3Speed.y -= 2.0f * g_fDeltaTime * 60.0f ;
-	}
+		m_v3Speed.y -= 2.0f;// * g_fDeltaTime * 60.0f ;
+	//}
 		
     if (GLFW_PRESS == glfwGetKey(m_oGameWindow, GLFW_KEY_A))
 	{

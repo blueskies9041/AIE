@@ -1,11 +1,12 @@
 #include "Sprite.h"
 #include <iostream>
+#include "Window.h"
 
 using std::cout;
 Sprite::Sprite( const char* a_TexFilepath, int a_iWidth, int a_iHeight, int a_iFrameWidth, int a_iFrameHeight, GLFWwindow * a_opWindow)
 	: Quad(a_TexFilepath, a_iWidth, a_iHeight, a_iFrameWidth, a_iFrameHeight)
 {
-	m_oGameWindow = a_opWindow; // Pass in the App Window for glfw stuff
+	m_oGameWindow = Window::GetInstance().GetContext();
 
 	m_v3Position = glm::vec3(g_iWindowWidth / 2, g_iWindowHeight / 2, 0.0f);
 	m_v3Speed = glm::vec3(0.0f, 0.0f, 0.0f);

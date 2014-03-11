@@ -17,7 +17,7 @@ class Player : public Sprite
 
 	public:
 
-		Player();
+		Player(GLFWwindow * a_pWindow);
 		~Player();
 		void Draw();
 		void Input();

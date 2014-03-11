@@ -15,7 +15,7 @@ Quad::Quad(const char * a_TexFilepath, int a_iWidth, int a_iHeight, int a_iFrame
 
 	m_ShaderProgram = LoadBasicShaders("resources/shaders/basic.vert", "resources/shaders/basic.frag");
 
-	/* Texture Loading through SOIL */
+	/* Texture */
 	m_Texture = new Texture(a_TexFilepath);
 	m_TextureID = m_ShaderProgram->GetUniform("DiffuseTexture");
 
@@ -100,9 +100,13 @@ Quad::Quad(const char * a_TexFilepath, int a_iWidth, int a_iHeight, int a_iFrame
 }
 
 Quad::~Quad() {
+
 	glDeleteBuffers(1, &m_VBO);
 	glDeleteBuffers(1, &m_EBO);
 	glDeleteVertexArrays(1, &m_VAO);
+
+	delete m_Texture;
+	delete m_ShaderProgram;
 }
 
 void Quad::SetUVOffset(float u, float v)
@@ -124,22 +128,23 @@ void Quad::Draw()
 
 	glActiveTexture(GL_TEXTURE0); //Choose texture unit
 	glBindTexture(GL_TEXTURE_2D, m_Texture->GetObject()); //Bind texture object
-	glUniform1i(m_TextureID, 0); //Communicate with fragment shader to use texture unit 0
 
-	//Bind Buffers
-	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_EBO);
-	glBindBuffer(GL_ARRAY_BUFFER, m_VBO);
+	glUniform1i(m_TextureID, 0); //Communicate with fragment shader to use texture unit 0
+	glUniform2f( m_UVOffsetID, m_v2UVOffset.x, m_v2UVOffset.y ); //Upload UV Offset to Shader
+
+	//Bind Vertex Array
 	glBindVertexArray(m_VAO);
 
 	glm::mat4 MVP = g_Projection * m_Model; // Multiply Projection Matrix * Model Matrix to get MVP Matrix 
+
 	//Upload MVP to Shader
 	glUniformMatrix4fv( m_MatrixID,
 						1,
 						GL_FALSE,
 						glm::value_ptr(MVP)); //have to use glm::value_ptr with glm
 
-	//Upload UV Offset to Shader
-	glUniform2f( m_UVOffsetID, m_v2UVOffset.x, m_v2UVOffset.y );
+
+
 
 	glDrawElements(GL_TRIANGLE_STRIP, 4 , GL_UNSIGNED_INT, 0); 
 	glBindVertexArray(0);

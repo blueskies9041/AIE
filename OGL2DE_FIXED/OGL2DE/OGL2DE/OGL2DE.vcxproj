@@ -70,6 +70,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="include\AccessorTemplate.h" />
+    <ClInclude Include="include\Engine.h" />
     <ClInclude Include="include\GLLOG.h" />
     <ClInclude Include="include\JustinTxtReader.h" />
     <ClInclude Include="include\Misc.h" />
@@ -80,8 +81,11 @@
     <ClInclude Include="include\Sprite.h" />
     <ClInclude Include="include\Text.h" />
     <ClInclude Include="include\Texture.h" />
+    <ClInclude Include="include\Timer.h" />
+    <ClInclude Include="include\Window.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="source\Engine.cpp" />
     <ClCompile Include="source\main.cpp" />
     <ClCompile Include="source\Misc.cpp" />
     <ClCompile Include="source\Player.cpp" />
@@ -91,6 +95,8 @@
     <ClCompile Include="source\Sprite.cpp" />
     <ClCompile Include="source\Text.cpp" />
     <ClCompile Include="source\Texture.cpp" />
+    <ClCompile Include="source\Timer.cpp" />
+    <ClCompile Include="source\Window.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="resources\graphics\Holstein.png" />
