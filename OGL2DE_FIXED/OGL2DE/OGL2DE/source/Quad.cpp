@@ -6,20 +6,22 @@
 using Justin::Vertex;
 
 Quad::Quad(const char * a_TexFilepath, int a_iWidth, int a_iHeight, int a_iFrameWidth, int a_iFrameHeight)
-	: m_iQuadWidth(a_iWidth), m_iQuadHeight(a_iHeight), m_v2FrameDimensions(glm::vec2((float)a_iFrameWidth, (float)a_iFrameHeight))
+:	m_iWidth(a_iWidth), 
+	m_iHeight(a_iHeight),
+	m_v2FrameDimensions(glm::vec2((float)a_iFrameWidth, (float)a_iFrameHeight))
 {
 
 	/* Shader Program */
 
 	m_ShaderProgram = LoadBasicShaders("resources/shaders/basic.vert", "resources/shaders/basic.frag");
 
-	/* Texture Loading through SOIL */
-	LoadTexture(a_TexFilepath);
+	/* Texture */
+	m_Texture = new Texture(a_TexFilepath);
 	m_TextureID = m_ShaderProgram->GetUniform("DiffuseTexture");
 
 	/* Vector & Matrices Initialziation  */
 	m_v2FrameDimensions = glm::vec2( (float)a_iFrameWidth, (float)a_iFrameHeight);
-	m_v2FrameDimensionsNorm = glm::vec2( 1.0f / ( m_iTextureWidth / m_v2FrameDimensions.x ) , 1.0f / ( m_iTextureHeight / m_v2FrameDimensions.y));
+	m_v2FrameDimensionsNorm = glm::vec2( 1.0f / ( m_Texture->GetWidth() / m_v2FrameDimensions.x ) , 1.0f / ( m_Texture->GetHeight() / m_v2FrameDimensions.y));
 	m_v2UVOffset = glm::vec2(.083f * 7 , 0.0f); // Should be the idle sprite in the teleport animation row
 	m_Model = glm::mat4(1.0f);
 
@@ -98,6 +100,13 @@ Quad::Quad(const char * a_TexFilepath, int a_iWidth, int a_iHeight, int a_iFrame
 }
 
 Quad::~Quad() {
+
+	glDeleteBuffers(1, &m_VBO);
+	glDeleteBuffers(1, &m_EBO);
+	glDeleteVertexArrays(1, &m_VAO);
+
+	delete m_Texture;
+	delete m_ShaderProgram;
 }
 
 void Quad::SetUVOffset(float u, float v)
@@ -110,30 +119,6 @@ void Quad::SetUVOffset(glm::vec2 uv)
 	m_v2UVOffset = uv;
 }
 
-void Quad::LoadTexture(const char* a_TexFilepath)
-{
-	// Same as Text LoadTexture() with Blending Added
-
-	m_uiTexture = 0;
-	m_uiSourceBlendMode	= GL_SRC_ALPHA;
-	m_uiDestinationBlendMode = GL_ONE_MINUS_SRC_ALPHA;
-
-	glGenTextures(1, &m_uiTexture);
-	glActiveTexture (GL_TEXTURE0);
-	glBindTexture( GL_TEXTURE_2D, m_uiTexture);
-
-	unsigned char* image = SOIL_load_image(a_TexFilepath, &m_iTextureWidth, &m_iTextureHeight, 0, SOIL_LOAD_RGBA);
-	
-	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, m_iTextureWidth, m_iTextureHeight, 0, GL_RGBA, GL_UNSIGNED_BYTE, image);
-	SOIL_free_image_data(image);
-
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
-
-	
-}
 
 void Quad::Draw()
 {
@@ -142,23 +127,26 @@ void Quad::Draw()
 	m_ShaderProgram->Use();
 
 	glActiveTexture(GL_TEXTURE0); //Choose texture unit
-	glBindTexture(GL_TEXTURE_2D, m_uiTexture); //Bind texture object
-	glUniform1i(m_TextureID, 0); //Communicate with fragment shader to use texture unit 0
+	glBindTexture(GL_TEXTURE_2D, m_Texture->GetObject()); //Bind texture object
 
-	//Bind Buffers
-	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_EBO);
-	glBindBuffer(GL_ARRAY_BUFFER, m_VBO);
+	glUniform1i(m_TextureID, 0); //Communicate with fragment shader to use texture unit 0
+	glUniform2f( m_UVOffsetID, m_v2UVOffset.x, m_v2UVOffset.y ); //Upload UV Offset to Shader
+
+	//Bind Vertex Array
+	glBindBuffer(m_VBO);
+	glBindBuffer(m_EBO);
 	glBindVertexArray(m_VAO);
 
 	glm::mat4 MVP = g_Projection * m_Model; // Multiply Projection Matrix * Model Matrix to get MVP Matrix 
+
 	//Upload MVP to Shader
 	glUniformMatrix4fv( m_MatrixID,
 						1,
 						GL_FALSE,
 						glm::value_ptr(MVP)); //have to use glm::value_ptr with glm
 
-	//Upload UV Offset to Shader
-	glUniform2f( m_UVOffsetID, m_v2UVOffset.x, m_v2UVOffset.y );
+
+
 
 	glDrawElements(GL_TRIANGLE_STRIP, 4 , GL_UNSIGNED_INT, 0); 
 	glBindVertexArray(0);

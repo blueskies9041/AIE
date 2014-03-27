@@ -19,40 +19,67 @@
     <Filter Include="Resource Files\Graphics">
       <UniqueIdentifier>{1e4191d6-8a88-4d77-8d5f-fcc2503b0a0f}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\OpenGL Objects">
+      <UniqueIdentifier>{0d7985c3-1725-4737-b21a-709e71336599}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Misc">
+      <UniqueIdentifier>{d6e15206-4237-4394-9fd1-6da932958f04}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Engine Objects">
+      <UniqueIdentifier>{96a876cb-5b82-47a7-bc0f-6165c3a8904f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\OpenGL Objects">
+      <UniqueIdentifier>{74f0db47-61aa-4c34-8bcf-c33b45e7d5f4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Engine Objects">
+      <UniqueIdentifier>{cabc9358-559a-4079-9d49-05ec2b336462}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Misc">
+      <UniqueIdentifier>{072cd03d-6af8-4573-ada9-ebff9fe24e13}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="include\AccessorTemplate.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="include\GLLOG.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="include\JustinTxtReader.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="include\Misc.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="include\Quad.h">
-      <Filter>Header Files</Filter>
+    <ClInclude Include="include\Texture.h">
+      <Filter>Header Files\OpenGL Objects</Filter>
     </ClInclude>
     <ClInclude Include="include\Shader.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="include\Sprite.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="include\Texture.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="include\Player.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="include\Text.h">
-      <Filter>Header Files</Filter>
+      <Filter>Header Files\OpenGL Objects</Filter>
     </ClInclude>
     <ClInclude Include="include\ShaderProgram.h">
-      <Filter>Header Files</Filter>
+      <Filter>Header Files\OpenGL Objects</Filter>
+    </ClInclude>
+    <ClInclude Include="include\AccessorTemplate.h">
+      <Filter>Header Files\Misc</Filter>
+    </ClInclude>
+    <ClInclude Include="include\GLLOG.h">
+      <Filter>Header Files\Misc</Filter>
+    </ClInclude>
+    <ClInclude Include="include\JustinTxtReader.h">
+      <Filter>Header Files\Misc</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Misc.h">
+      <Filter>Header Files\Misc</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Player.h">
+      <Filter>Header Files\Engine Objects</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Quad.h">
+      <Filter>Header Files\Engine Objects</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Sprite.h">
+      <Filter>Header Files\Engine Objects</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Text.h">
+      <Filter>Header Files\Engine Objects</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Timer.h">
+      <Filter>Header Files\Engine Objects</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Window.h">
+      <Filter>Header Files\Engine Objects</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Engine.h">
+      <Filter>Header Files\Engine Objects</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -60,28 +87,37 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="source\Misc.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="source\Quad.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="source\Shader.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="source\Sprite.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="source\Texture.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\Misc</Filter>
     </ClCompile>
     <ClCompile Include="source\Player.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\Engine Objects</Filter>
     </ClCompile>
-    <ClCompile Include="source\Text.cpp">
-      <Filter>Source Files</Filter>
+    <ClCompile Include="source\Quad.cpp">
+      <Filter>Source Files\Engine Objects</Filter>
+    </ClCompile>
+    <ClCompile Include="source\Shader.cpp">
+      <Filter>Source Files\OpenGL Objects</Filter>
     </ClCompile>
     <ClCompile Include="source\ShaderProgram.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\OpenGL Objects</Filter>
+    </ClCompile>
+    <ClCompile Include="source\Text.cpp">
+      <Filter>Source Files\Engine Objects</Filter>
+    </ClCompile>
+    <ClCompile Include="source\Texture.cpp">
+      <Filter>Source Files\OpenGL Objects</Filter>
+    </ClCompile>
+    <ClCompile Include="source\Sprite.cpp">
+      <Filter>Source Files\Engine Objects</Filter>
+    </ClCompile>
+    <ClCompile Include="source\Timer.cpp">
+      <Filter>Source Files\Engine Objects</Filter>
+    </ClCompile>
+    <ClCompile Include="source\Window.cpp">
+      <Filter>Source Files\Engine Objects</Filter>
+    </ClCompile>
+    <ClCompile Include="source\Engine.cpp">
+      <Filter>Source Files\Engine Objects</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -115,6 +151,5 @@
     <None Include="resources\graphics\Holstein2.png">
       <Filter>Resource Files\Graphics</Filter>
     </None>
-    <None Include="ClassDiagram1.cd" />
   </ItemGroup>
 </Project>

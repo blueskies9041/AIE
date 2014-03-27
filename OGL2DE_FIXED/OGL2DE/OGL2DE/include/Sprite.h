@@ -36,7 +36,6 @@ class Sprite : public Quad
 		Sprite( const char* a_TexFilepath, int a_iWidth, int a_iHeight, int a_iFrameWidth, int a_iFrameHeight, GLFWwindow * a_opWindow);
 		~Sprite();
 		void Draw();
-		void Cleanup();
 		void Play(Animation &a_roAnimation);
 		glm::vec3 m_v3Position;
 

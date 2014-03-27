@@ -5,8 +5,6 @@
 #include "ShaderProgram.h"
 #include "Texture.h"
 
-
-
 using namespace Sam;
 
 /*
@@ -28,35 +26,32 @@ class Quad
 		void SetUVOffset(glm::vec2 uv);
 
 		void Draw();
-		void LoadTexture(const char * a_TexFilepath);
 
 	protected:
 
 		/* Standard members */
-		int m_iTextureWidth; //Actual Texture (Sprite Sheet) Dimensions in pixels
-		int m_iTextureHeight;
-		int m_iQuadWidth; //Primitive Dimensions in pixels
-		int m_iQuadHeight;
-		unsigned int m_uiTexture; // The texture loaded in with SOIL
+		int m_iWidth; //Primitive Dimensions in pixels
+		int m_iHeight;
+
 		unsigned int m_uiSourceBlendMode;
 		unsigned int m_uiDestinationBlendMode;
 
 		Justin::Vertex m_aoVertices[4]; // Array of Vertices, see "Vertex" Structure in Misc.h
 		glm::mat4 m_Model; //Culumnating affine  transformation matrix (Translation * Rotation * Scale)
-		glm::mat4 m_View;  //Camera Matrix, not currently in use
 		glm::vec2 m_v2UVOffset; //Texture coordinate offset for Sprite Sheet use later
 		glm::vec2 m_v2FrameDimensions; //Size of each frame in pixel dimensions (75 x 75 etc)
 		glm::vec2 m_v2FrameDimensionsNorm; // Dimensions of each "frame" in the texture expressed in normalized device coordinates
 		
-		/* OpenGL members */
+		/* OpenGL Objects */
 
 		ShaderProgram * m_ShaderProgram;
 		Texture * m_Texture;
+
 		GLuint m_VBO; // Vertex Buffer Object
 		GLuint m_EBO; // Element Buffer Object
 		GLuint m_VAO; // Vertex Attribute Object
 		
-		/* Shader IDs */
+		/* Shader Uniforms */
 		GLint m_MatrixID; // Location of MVP Matrix in Vertex Shader
 		GLint m_TextureID; // Location of Texture in Vertex Shader
 		GLint m_UVOffsetID; // Location of UV Offset in Vertex Shader

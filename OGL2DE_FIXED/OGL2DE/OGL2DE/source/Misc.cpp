@@ -44,10 +44,13 @@ namespace Justin
 
 
 };
+#include "Sprite.h"
+#include "Window.h"
 
 namespace Sam
 {
 	/* Globals */
+	
 	int g_iWindowWidth = 1024;
 	int g_iWindowHeight = 768;
 	float g_fDeltaTime = 0.0f;
@@ -62,48 +65,48 @@ namespace Sam
 	//Origin (0,0) at top left and (Window Width, Window Height) at bottom right
 
 	/* Functions */
-	GLFWwindow* g_MyWindow = Sam::NewWindow();
-	GLFWwindow* NewWindow()
-	{
-		glfwInit();
+	//GLFWwindow* g_MyWindow = Sam::NewWindow();
+	//GLFWwindow* NewWindow()
+	//{
+	//	glfwInit();
 
-		char message[256];
-		sprintf(message, "Starting GLFW %s\n", glfwGetVersionString());
-		assert(gl_log(message, __FILE__, __LINE__));
-		glfwSetErrorCallback(Justin::glfw_error_callback);
+	//	char message[256];
+	//	sprintf(message, "Starting GLFW %s\n", glfwGetVersionString());
+	//	assert(gl_log(message, __FILE__, __LINE__));
+	//	glfwSetErrorCallback(Justin::glfw_error_callback);
 
-		glfwWindowHint(GLFW_SAMPLES, 16);
-		//Fullscreen mode stuff
-		GLFWmonitor* mon = glfwGetPrimaryMonitor();
+	//	glfwWindowHint(GLFW_SAMPLES, 16);
+	//	//Fullscreen mode stuff
+	//	GLFWmonitor* mon = glfwGetPrimaryMonitor();
 
-		const GLFWvidmode* vmode = glfwGetVideoMode(mon);
-		GLFWwindow* g_MyWindow = glfwCreateWindow(vmode ->width, vmode->height, "FUCK YYEAAAHHHHH AUSTRALIA", NULL, NULL);
+	//	const GLFWvidmode* vmode = glfwGetVideoMode(mon);
+	//	GLFWwindow* g_MyWindow = glfwCreateWindow(vmode ->width, vmode->height, "FUCK YYEAAAHHHHH AUSTRALIA", NULL, NULL);
 
-		glfwSetWindowSize(g_MyWindow, g_iWindowWidth, g_iWindowHeight);
-		glfwMakeContextCurrent(g_MyWindow);
+	//	glfwSetWindowSize(g_MyWindow, g_iWindowWidth, g_iWindowHeight);
+	//	glfwMakeContextCurrent(g_MyWindow);
 
-		if(!g_MyWindow)
-		{
-			fprintf( stderr, "ERROR: Could not open GLFW3 Window\n");
-			glfwTerminate();
-		}
+	//	if(!g_MyWindow)
+	//	{
+	//		fprintf( stderr, "ERROR: Could not open GLFW3 Window\n");
+	//		glfwTerminate();
+	//	}
 
-		glfwMakeContextCurrent(g_MyWindow);
+	//	glfwMakeContextCurrent(g_MyWindow);
 
-		glewExperimental = GL_TRUE;
-		glewInit();
+	//	glewExperimental = GL_TRUE;
+	//	glewInit();
 
-		const GLubyte* renderer = glGetString(GL_RENDERER);
-		const GLubyte* version = glGetString(GL_VERSION);
-		printf ("Renderer: %s\n", renderer);
-		printf( "OpenGL Version: %s\n\n", version);
+	//	const GLubyte* renderer = glGetString(GL_RENDERER);
+	//	const GLubyte* version = glGetString(GL_VERSION);
+	//	printf ("Renderer: %s\n", renderer);
+	//	printf( "OpenGL Version: %s\n\n", version);
 
-		glEnable (GL_DEPTH_TEST);
-		glDepthFunc (GL_LESS);
-		glEnable(GL_CULL_FACE);
+	//	glEnable (GL_DEPTH_TEST);
+	//	glDepthFunc (GL_LESS);
+	//	glEnable(GL_CULL_FACE);
 
-		return g_MyWindow;
-		}
+	//	return g_MyWindow;
+	//	}
 
 	GLuint LoadTexture(const char * a_cpFilepath, int a_iWidth, int a_iHeight) {
 

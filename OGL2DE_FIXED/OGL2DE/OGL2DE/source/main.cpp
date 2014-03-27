@@ -20,6 +20,8 @@
 #include "Player.h"
 #include <iostream>
 #include "Text.h"
+#include "Timer.h"
+#include "Window.h"
 
 using namespace std;
 
@@ -27,47 +29,36 @@ void main()
 {
 	/* Test Objects */
 
+	Timer::GetInstance();
+	Window::GetInstance().Initialize(1024, 768, "HELLO");
+	
 	//Text T("resources/graphics/Holstein.png");
 	//Text Z("resources/graphics/Holstein2.png");	
 
-	Sprite SpriteA("resources/graphics/ZeroSpriteSheet.png", 200, 200, 75, 75, g_MyWindow);
-	Player Player1;
+	//Sprite SpriteA("resources/graphics/ZeroSpriteSheet.png", 200, 200, 75, 75, Window::GetInstance().GetContext());
+	//Player Player1(Window::GetInstance().GetContext());
+
 	
 	//SpriteA.m_v3Position.x += 150.0f;
 
-	ResetDeltaTime();
 	/* Main Loop */
-	while (!glfwWindowShouldClose(g_MyWindow))
-	{	
 
-        /* Render loop*/
-		glEnable(GL_ALPHA_TEST);
-		glAlphaFunc(GL_GREATER, .5);
-		glEnable(GL_ALPHA);
-		glViewport(0,0,Sam::g_iWindowWidth, Sam::g_iWindowHeight);
-		glClearColor(0.0f, 0.25f, 1.0f, 1.0f);
-		glClear (GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+	while (!glfwWindowShouldClose(Window::GetInstance().GetContext()))
+	{	
+		if (glfwGetKey(Window::GetInstance().GetContext(), GLFW_KEY_Q))
+			glfwSetWindowShouldClose(Window::GetInstance().GetContext() , 1);
 
 		/* Draw Calls */
 		//T.Print("Text.", 10, 100, 25);
 		//Z.Print("Text. NOW WITH BLUE H AND BLACKNESS! ", 10, 165, 25);
-		//SpriteA.Draw();
-		Player1.Input();
-		Player1.Draw();
-
-        glfwSwapBuffers(g_MyWindow);
-
-        /* Poll for and process events */
-		if(GLFW_PRESS == glfwGetKey(g_MyWindow, GLFW_KEY_ESCAPE))
-			glfwSetWindowShouldClose(g_MyWindow, true);
 		
-		Justin::glfw_update_fps_counter(g_MyWindow);
+	/*	SpriteA.Draw();
+		Player1.Input();
+		Player1.Draw();*/
 
-		ResetDeltaTime();
-		glfwPollEvents();
+		Window::GetInstance().Update();
     }
 
-	
-	glfwTerminate();
+	Window::GetInstance().Close();
 }
 

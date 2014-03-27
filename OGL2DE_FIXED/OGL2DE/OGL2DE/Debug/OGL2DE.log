@@ -1,17 +1,14 @@
-﻿Build started 3/10/2014 2:15:35 PM.
+﻿Build started 3/11/2014 10:59:05 AM.
      1>Project "C:\Users\Student\Documents\GitHub\AIE\OGL2DE_FIXED\OGL2DE\OGL2DE\OGL2DE.vcxproj" on node 2 (build target(s)).
      1>InitializeBuildStatus:
          Creating "Debug\OGL2DE.unsuccessfulbuild" because "AlwaysCreate" was specified.
        ClCompile:
-         All outputs are up-to-date.
-       Link:
-         All outputs are up-to-date.
-         OGL2DE.vcxproj -> C:\Users\Student\Documents\GitHub\AIE\OGL2DE_FIXED\OGL2DE\Debug\OGL2DE.exe
-       FinalizeBuildStatus:
-         Deleting file "Debug\OGL2DE.unsuccessfulbuild".
-         Touching "Debug\OGL2DE.lastbuildstate".
-     1>Done Building Project "C:\Users\Student\Documents\GitHub\AIE\OGL2DE_FIXED\OGL2DE\OGL2DE\OGL2DE.vcxproj" (build target(s)).
+         C:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\bin\CL.exe /c /ZI /nologo /W3 /WX- /Od /Oy- /D _MBCS /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc100.pdb" /Gd /TP /analyze- /errorReport:prompt source\Quad.cpp
+         Quad.cpp
+     1>c:\users\student\documents\github\aie\ogl2de_fixed\ogl2de\ogl2de\source\quad.cpp(136): error C2198: 'PFNGLBINDBUFFERPROC' : too few arguments for call
+     1>c:\users\student\documents\github\aie\ogl2de_fixed\ogl2de\ogl2de\source\quad.cpp(137): error C2198: 'PFNGLBINDBUFFERPROC' : too few arguments for call
+     1>Done Building Project "C:\Users\Student\Documents\GitHub\AIE\OGL2DE_FIXED\OGL2DE\OGL2DE\OGL2DE.vcxproj" (build target(s)) -- FAILED.
 
-Build succeeded.
+Build FAILED.
 
-Time Elapsed 00:00:00.05
+Time Elapsed 00:00:00.80

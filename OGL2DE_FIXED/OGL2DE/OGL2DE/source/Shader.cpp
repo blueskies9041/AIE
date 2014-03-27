@@ -7,6 +7,7 @@
 #include <stdexcept>
 #include <cassert>
 #include <sstream>
+#include <iostream>
 
 GLuint LoadShaders(const char * vertex_file_path,const char * fragment_file_path)
 {
@@ -217,7 +218,7 @@ Shader::Shader(const std::string& a_sShaderCode, GLenum a_ShaderType )
 	/* Create Shader Object */
 	m_Object = glCreateShader(a_ShaderType);
 	if(m_Object == 0)
-		throw std::runtime_error("glCreateShader failed.");
+		printf("glCreateShader failed.\n");
 
 	/* Set Source Code */
     const char* pShaderCode = a_sShaderCode.c_str();
@@ -225,36 +226,32 @@ Shader::Shader(const std::string& a_sShaderCode, GLenum a_ShaderType )
 
 	/* Compile */
 	glCompileShader(m_Object);
+	int iInfoLogLength;
 
-	/* Throw Exception on Error */
-    GLint shaderStatus;
-    glGetShaderiv(m_Object, GL_COMPILE_STATUS, &shaderStatus);
-    if (shaderStatus == GL_FALSE) {
-        std::string msg("Compile failure in shader:\n");
-        
-        GLint infoLogLength;
-        glGetShaderiv(m_Object, GL_INFO_LOG_LENGTH, &infoLogLength);
+	
+	/* Check Shader */
+	GLint Result;
+	glGetShaderiv(m_Object, GL_COMPILE_STATUS, &Result);
+	glGetShaderiv(m_Object, GL_INFO_LOG_LENGTH, &iInfoLogLength);
+	if(iInfoLogLength > 0)
+	{
+		std::vector<char> ShaderErrMsg(iInfoLogLength + 1);
+		glGetShaderInfoLog(m_Object, iInfoLogLength, NULL, &ShaderErrMsg[0]);
+		printf("%s\n", &ShaderErrMsg[0]);
+	}
 
-        char* strInfoLog = new char[infoLogLength + 1];
-        glGetShaderInfoLog(m_Object, infoLogLength, NULL, strInfoLog);
-
-        msg += strInfoLog;
-        delete[] strInfoLog;
-        
-        glDeleteShader(m_Object); m_Object = 0;
-        throw std::runtime_error(msg);
-    }
-    
     m_pRefCount = new unsigned;
     *m_pRefCount = 1;
 
 }
+
 Shader::Shader(const Shader& a_Other) :
     m_Object(a_Other.m_Object),
     m_pRefCount(a_Other.m_pRefCount)
 {
     Retain();
 }
+
 Shader::~Shader()
 {
 	 if(m_pRefCount) 
@@ -268,7 +265,7 @@ Shader Shader::ShaderFromFile(const std::string& a_sFilepath, GLenum a_ShaderTyp
 	f.open(a_sFilepath.c_str(), std::ios::in | std::ios::binary); //Opening
 	if(!f.is_open())
 	{
-		throw std::runtime_error(std::string("Failed to open file: ") + a_sFilepath); //Debugging
+		std::cout << (std::string("Failed to open file: ") + a_sFilepath); //Debugging
 	}
 
 	/* Reading Text File */
@@ -288,7 +285,6 @@ Shader& Shader::operator = (const Shader& a_Other)
     Retain();
     return *this;
 }
-
 
 void Shader::Retain()
 {
